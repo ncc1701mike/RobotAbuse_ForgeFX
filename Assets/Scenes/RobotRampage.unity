@@ -334,6 +334,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
+  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -415,6 +416,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &963194229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7af555fc6db89b44bd8d164a2ed65c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  robotTarget: {fileID: 1767917520}
+  moveSpeed: 1
+  zoomSpeed: 1
+  rotationSpeed: 35
+--- !u!4 &1767917520 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3034200680090383646, guid: 76b340b322d45824bb2a49ca7d60867f, type: 3}
+  m_PrefabInstance: {fileID: 5633035873654234761}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5633035873654234761
 PrefabInstance:
   m_ObjectHideFlags: 0
