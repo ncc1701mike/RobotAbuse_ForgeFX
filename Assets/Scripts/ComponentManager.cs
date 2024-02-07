@@ -1,14 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PartsManager : MonoBehaviour
+
+public class ComponentManager : MonoBehaviour
 {
+    public static event Action<bool?> OnComponentStatusChanged;
     private Camera mainCamera;
     private Transform selectedPart;
     private Vector3 mouseOffset;
     private float mouseZCoord;
     private Vector3 initialLocalPosition;
+
+    // Dictionaries to track moved components and their initial positions relative to the torso
     private Dictionary<Transform, bool> partMoved = new Dictionary<Transform, bool>();
     private Dictionary<Transform, Vector3> initialPositionsRelativeToTorso = new Dictionary<Transform, Vector3>();
 
@@ -36,27 +41,27 @@ public class PartsManager : MonoBehaviour
             {
                 if (partMoved[selectedPart])
                 {
-                    // Snap back part only if it was previously marked as moved
+                    // Snap back only if component was previously marked as moved
                     SnapBackPart();
                     partMoved[selectedPart] = false;
                 }
                 
                 else
                 {
-                    // Mark part as moved for next click, except for the torso
+                    // Mark component as moved for next click, except for the torso
                     if (!selectedPart.CompareTag("Torso"))
                     {
                         partMoved[selectedPart] = true;
                     }
                 }
-                selectedPart = null; // Clear selection to prevent unintended dragging
+                selectedPart = null; 
             }
         }
     }
 
     private void InitializePartsRelativePosition()
     {
-        // Initialize relative positions for all parts
+        // Initialize the component relative positions
         foreach (Transform part in GetComponentsInChildren<Transform>())
         {
             if (part.CompareTag("Torso") || part.CompareTag("Arm"))
@@ -67,7 +72,7 @@ public class PartsManager : MonoBehaviour
         }
     }
 
-    private void TrySelectPart()
+    private void TrySelectPart() 
     {
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -76,11 +81,18 @@ public class PartsManager : MonoBehaviour
         {
             if (hit.collider.CompareTag("Torso") || hit.collider.CompareTag("Arm"))
             {
+                // Select the component and store its initial position
                 selectedPart = hit.transform;
                 initialLocalPosition = selectedPart.localPosition;
                 mouseZCoord = mainCamera.WorldToScreenPoint(selectedPart.position).z;
                 mouseOffset = selectedPart.position - GetMouseWorldPos();
+
+                if (hit.collider.CompareTag("Torso"))
+                {
+                    OnComponentStatusChanged?.Invoke(null);
+                }
             }
+
         }
     }
 
@@ -88,23 +100,38 @@ public class PartsManager : MonoBehaviour
     {
         if (selectedPart != null)
         {
+            // Drag the selected component
             Vector3 newWorldPosition = GetMouseWorldPos() + mouseOffset;
             selectedPart.position = newWorldPosition;
+
+            if (!selectedPart.CompareTag("Torso"))
+            {
+                OnComponentStatusChanged?.Invoke(false);
+            }
         }
     }
 
     private void SnapBackPart()
     {
+        // Snap back to initial position using the local position
         if (selectedPart != null && initialPositionsRelativeToTorso.ContainsKey(selectedPart))
         {
+            OnComponentStatusChanged?.Invoke(true);
             selectedPart.localPosition = initialPositionsRelativeToTorso[selectedPart];
         }
     }
 
     private Vector3 GetMouseWorldPos()
     {
+        // Get the mouse position in world coordinates
         Vector3 mousePoint = Input.mousePosition;
         mousePoint.z = mouseZCoord;
         return mainCamera.ScreenToWorldPoint(mousePoint);
+    }
+
+    public void UpdateComponentStatus(bool? isDetached)
+    {
+        // Update the UI with the component status
+        OnComponentStatusChanged?.Invoke(isDetached);
     }
 }
