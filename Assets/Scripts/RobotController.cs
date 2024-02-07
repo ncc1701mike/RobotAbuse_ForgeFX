@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class RobotController : MonoBehaviour
 {
+    //public Transform Torso; 
+    //public Transform Arm;
     private Vector3 mouseOffset;
     private float mouseZCoord;
 
+    private void Start()
+    {
+        //Torso = GameObject.Find("Torso").transform;
+        //Arm = GameObject.Find("Arm").transform;
+    }
 
     private void OnMouseDown()  // Get the offset between the mouse position and the object position
     {
@@ -21,7 +28,7 @@ public class RobotController : MonoBehaviour
         mousePoint.z = mouseZCoord;
         return Camera.main.ScreenToWorldPoint(mousePoint);
     }
-    
+
 
     private void OnMouseDrag()  // Move the object with the mouse
     {
