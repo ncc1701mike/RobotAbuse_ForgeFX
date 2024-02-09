@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc8d2eed887a8f544b93e28bc0b657c4, type: 3}
+  m_Name: DetachablePartsConfig
+  m_EditorClassIdentifier: 
+  headComponents:
+  - componentName: Robot_Neck
+    tagName: Head
+    gameObject: {fileID: 0}
+    meshRenderer: {fileID: 0}
+  - componentName: Robot_Head
+    tagName: Head
+    gameObject: {fileID: 0}
+    meshRenderer: {fileID: 0}
+  - componentName: Robot_Jaw
+    tagName: Head
+    gameObject: {fileID: 0}
+    meshRenderer: {fileID: 0}
+  rightArmComponents:
+  - componentName: Robot_Upperarm_Right
+    tagName: Right Arm
+    gameObject: {fileID: 0}
+    meshRenderer: {fileID: 0}
+  - componentName: Robot_Lowerarm_Right
+    tagName: Right Arm
+    gameObject: {fileID: 0}
+    meshRenderer: {fileID: 0}
+  - componentName: Robot_Hand_Right
+    tagName: Right Arm
+    gameObject: {fileID: 0}
+    meshRenderer: {fileID: 0}
+  leftArmComponents:
+  - componentName: Robot_Upperarm_Left
+    tagName: Left Arm
+    gameObject: {fileID: 0}
+    meshRenderer: {fileID: 0}
+  - componentName: Robot_Lowerarm_Left
+    tagName: Left Arm
+    gameObject: {fileID: 0}
+    meshRenderer: {fileID: 0}
+  - componentName: Robot_Hand_Left
+    tagName: Left Arm
+    gameObject: {fileID: 0}
+    meshRenderer: {fileID: 0}
+  rightLegComponents:
+  - componentName: Robot_Thigh_Right
+    tagName: Right Leg
+    gameObject: {fileID: 0}
+    meshRenderer: {fileID: 0}
+  - componentName: Robot_Shin_Right
+    tagName: Right Leg
+    gameObject: {fileID: 0}
+    meshRenderer: {fileID: 0}
+  - componentName: Robot_Foot_Right
+    tagName: Right Leg
+    gameObject: {fileID: 0}
+    meshRenderer: {fileID: 0}
+  leftLegComponents:
+  - componentName: Robot_Thigh_Left
+    tagName: Left Leg
+    gameObject: {fileID: 0}
+    meshRenderer: {fileID: 0}
+  - componentName: Robot_Shin_Left
+    tagName: Left Leg
+    gameObject: {fileID: 0}
+    meshRenderer: {fileID: 0}
+  - componentName: Robot_Foot_Left
+    tagName: Left Leg
+    gameObject: {fileID: 0}
+    meshRenderer: {fileID: 0}
+  eyeComponents:
+  - componentName: Robot_Eye_Left
+    tagName: Eyes
+    gameObject: {fileID: 0}
+    meshRenderer: {fileID: 0}
+  - componentName: Robot_Eye_Right
+    tagName: Eyes
+    gameObject: {fileID: 0}
+    meshRenderer: {fileID: 0}
+  torsoComponents:
+  - componentName: Robot_Torso
+    tagName: Torso
+    gameObject: {fileID: 0}
+    meshRenderer: {fileID: 0}
+  - componentName: Robot_Hips
+    tagName: Torso
+    gameObject: {fileID: 0}
+    meshRenderer: {fileID: 0}

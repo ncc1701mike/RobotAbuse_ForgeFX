@@ -5,7 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Torso
-  - Arm
+  - Head
+  - Right Arm
+  - Left Arm
+  - Right Leg
+  - Left Leg
+  - Eyes
   layers:
   - Default
   - TransparentFX

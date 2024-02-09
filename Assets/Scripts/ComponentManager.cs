@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class ComponentManager : MonoBehaviour
 {
+    public DetachablePartsConfig partsConfig;
     public static event Action<bool?> OnComponentStatusChanged;
     private Camera mainCamera;
     private Transform selectedPart;
@@ -22,6 +23,8 @@ public class ComponentManager : MonoBehaviour
         mainCamera = Camera.main;
         InitializePartsRelativePosition();
     }
+
+
 
     void Update()
     {
@@ -62,12 +65,24 @@ public class ComponentManager : MonoBehaviour
     private void InitializePartsRelativePosition()
     {
         // Initialize the component relative positions
-        foreach (Transform part in GetComponentsInChildren<Transform>())
+        InitializePartPositions(partsConfig.eyeComponents);
+        InitializePartPositions(partsConfig.headComponents);
+        InitializePartPositions(partsConfig.torsoComponents);
+        InitializePartPositions(partsConfig.rightArmComponents);
+        InitializePartPositions(partsConfig.leftArmComponents);
+        InitializePartPositions(partsConfig.rightLegComponents);
+        InitializePartPositions(partsConfig.leftLegComponents);
+    }
+
+    private void InitializePartPositions(List<DetachablePartsConfig.PartConfig> partConfigs)
+    {
+        // Initialize the component relative positions
+        foreach (var partConfig in partConfigs)
         {
-            if (part.CompareTag("Torso") || part.CompareTag("Arm"))
+            if (partConfig.gameObject != null)
             {
-                initialPositionsRelativeToTorso[part] = part.localPosition;
-                partMoved[part] = false;
+                initialPositionsRelativeToTorso[partConfig.gameObject.transform] = partConfig.gameObject.transform.localPosition;
+                partMoved[partConfig.gameObject.transform] = false;
             }
         }
     }
@@ -79,22 +94,28 @@ public class ComponentManager : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            if (hit.collider.CompareTag("Torso") || hit.collider.CompareTag("Arm"))
+            Transform hitTransform = hit.transform;
+            
+            if (IsConfiguredPart(hitTransform))
             {
                 // Select the component and store its initial position
-                selectedPart = hit.transform;
+                selectedPart = hitTransform;
                 initialLocalPosition = selectedPart.localPosition;
                 mouseZCoord = mainCamera.WorldToScreenPoint(selectedPart.position).z;
                 mouseOffset = selectedPart.position - GetMouseWorldPos();
 
-                if (hit.collider.CompareTag("Torso"))
-                {
-                    OnComponentStatusChanged?.Invoke(null);
-                }
+                OnComponentStatusChanged?.Invoke(hit.collider.CompareTag("Torso") ? null : false); 
             }
 
         }
     }
+
+
+    private bool IsConfiguredPart(Transform partTransform)
+    {
+        return partsConfig.IsAnyPart(partTransform);
+    }
+
 
     private void DragSelectedPart()
     {
