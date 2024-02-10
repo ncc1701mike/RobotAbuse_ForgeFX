@@ -6,7 +6,7 @@ public class DataInitializer : MonoBehaviour
 {
     public DetachablePartsConfig partsConfig;
 
-    void Start()
+    void Awake()
     {
         InitializeComponents(partsConfig.headComponents);
 

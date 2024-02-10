@@ -10,7 +10,7 @@ public class DetachablePartsConfig : ScriptableObject
     public List<PartConfig> rightLegComponents = new List<PartConfig>();
     public List<PartConfig> leftLegComponents = new List<PartConfig>();
     public List<PartConfig> eyeComponents = new List<PartConfig>();
-    public List<PartConfig> torsoComponents = new List<PartConfig>(); // Although not detachable, included for highlighting
+    public List<PartConfig> torsoComponents = new List<PartConfig>(); // Not detachable, but has to be included for highlighting
 
     [System.Serializable]
     public class PartConfig 

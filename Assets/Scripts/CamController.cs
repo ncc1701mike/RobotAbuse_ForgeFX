@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class CamController : MonoBehaviour
 {
+    // Input handler Interface for input handling to facilitate testing
+    public IInputHandler inputHandler = new UnityInputHandler();
     public Transform robotTarget;
     public float moveSpeed = 1.0f;
     public float zoomSpeed = 1.0f;
     public float rotationSpeed = 35.0f;
+    public float testDeltaTime = -1f;
+
 
     void Update()
     {
@@ -16,42 +20,49 @@ public class CamController : MonoBehaviour
         RotationControl();
     }
 
-    void Movement()
+
+    internal void Movement()
     {
         // Movement on the X and Y axis
         Vector3 direction = Vector3.zero;
-        if (Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.Space)) direction += Vector3.up;
-        if (Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.Space)) direction += Vector3.down;
-        if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.Space)) direction += Vector3.left;
-        if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.Space)) direction += Vector3.right;
+        if (inputHandler.GetKey(KeyCode.UpArrow) && !inputHandler.GetKey(KeyCode.Space)) direction += Vector3.up;
+        if (inputHandler.GetKey(KeyCode.DownArrow) && !inputHandler.GetKey(KeyCode.Space)) direction += Vector3.down;
+        if (inputHandler.GetKey(KeyCode.LeftArrow) && !inputHandler.GetKey(KeyCode.Space)) direction += Vector3.left;
+        if (inputHandler.GetKey(KeyCode.RightArrow) && !inputHandler.GetKey(KeyCode.Space)) direction += Vector3.right;
 
         transform.Translate(direction * moveSpeed * Time.deltaTime, Space.World);
     }
 
-    void ZoomControl()
+
+    internal void ZoomControl()
     {
         // Zoom in and out on the Z axis
-        if (Input.GetKey(KeyCode.Return)) Zoom(zoomSpeed);
-        if (Input.GetKey(KeyCode.RightShift)) Zoom(-zoomSpeed);
+        if (inputHandler.GetKey(KeyCode.Return)) Zoom(zoomSpeed);
+        if (inputHandler.GetKey(KeyCode.RightShift)) Zoom(-zoomSpeed);
     }
 
-    void Zoom(float speed)
+
+    internal void Zoom(float speed)
     {
         Vector3 zoomDirection = transform.forward * speed * Time.deltaTime;
         transform.Translate(zoomDirection, Space.World);
     }
 
-    void RotationControl()
+
+    internal void RotationControl()
     {   
         // Rotation around the Robot
-        if (Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.Space)) Rotate(Vector3.up, rotationSpeed);
-        if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.Space)) Rotate(Vector3.up, -rotationSpeed);
-        if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.Space)) Rotate(Vector3.right, rotationSpeed);
-        if (Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.Space)) Rotate(Vector3.right, -rotationSpeed);
+        if (inputHandler.GetKey(KeyCode.RightArrow) && inputHandler.GetKey(KeyCode.Space)) Rotate(Vector3.up, rotationSpeed);
+        if (inputHandler.GetKey(KeyCode.LeftArrow) && inputHandler.GetKey(KeyCode.Space)) Rotate(Vector3.up, -rotationSpeed);
+        if (inputHandler.GetKey(KeyCode.UpArrow) && inputHandler.GetKey(KeyCode.Space)) Rotate(Vector3.right, rotationSpeed);
+        if (inputHandler.GetKey(KeyCode.DownArrow) && inputHandler.GetKey(KeyCode.Space)) Rotate(Vector3.right, -rotationSpeed);
     }
 
-    void Rotate(Vector3 axis, float speed)
+
+    internal void Rotate(Vector3 axis, float speed)
     {
-        transform.RotateAround(robotTarget.position, axis, speed * Time.deltaTime);
+        float deltaTime = testDeltaTime >= 0 ? testDeltaTime : Time.deltaTime;
+        Quaternion initialRotation = transform.rotation;
+        transform.RotateAround(robotTarget.position, axis, speed * deltaTime);
     }
 }
