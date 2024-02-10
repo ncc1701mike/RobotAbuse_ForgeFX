@@ -65,7 +65,6 @@ public class HighlightManager : MonoBehaviour
         }
     }
 
-
     private void HighlightGroup(Renderer[] renderers, Material mat)
     {
         // Highlight or reset specific components
@@ -74,7 +73,6 @@ public class HighlightManager : MonoBehaviour
             renderer.material = mat;
         }
     }
-
 
     private void HighlightAllParts(Material mat)
     {
@@ -87,7 +85,6 @@ public class HighlightManager : MonoBehaviour
         HighlightGroup(partsConfig.leftLegComponents.ConvertAll(r => r.meshRenderer).ToArray(), mat);
     }
     
-
     private void HighlightDetachableParts(Material defaultMaterial, string excludeTag = "")
     {
         // Highlight or reset components based on exclude Tag
@@ -102,7 +99,6 @@ public class HighlightManager : MonoBehaviour
         if (excludeTag != "Head")
             HighlightGroup(partsConfig.headComponents.ConvertAll(r => r.meshRenderer).ToArray(), defaultMaterial);
     }
-
 
     private void ResetHighlights()
     {

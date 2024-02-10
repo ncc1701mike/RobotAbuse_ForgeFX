@@ -18,13 +18,12 @@ public class ComponentManager : MonoBehaviour
     private Dictionary<Transform, bool> partMoved = new Dictionary<Transform, bool>();
     private Dictionary<Transform, Vector3> initialPositionsRelativeToTorso = new Dictionary<Transform, Vector3>();
 
+    
     void Awake()
     {
         mainCamera = Camera.main;
         InitializePartsRelativePosition();
     }
-
-
 
     void Update()
     {
@@ -64,7 +63,7 @@ public class ComponentManager : MonoBehaviour
 
     private void InitializePartsRelativePosition()
     {
-        // Initialize the component relative positions
+        // Initialize component's relative positions
         InitializePartPositions(partsConfig.eyeComponents);
         InitializePartPositions(partsConfig.headComponents);
         InitializePartPositions(partsConfig.torsoComponents);
@@ -76,7 +75,7 @@ public class ComponentManager : MonoBehaviour
 
     private void InitializePartPositions(List<DetachablePartsConfig.PartConfig> partConfigs)
     {
-        // Initialize the component relative positions
+        // Initialize component's initial positions
         foreach (var partConfig in partConfigs)
         {
             if (partConfig.gameObject != null)
@@ -110,12 +109,10 @@ public class ComponentManager : MonoBehaviour
         }
     }
 
-
     private bool IsConfiguredPart(Transform partTransform)
     {
         return partsConfig.IsAnyPart(partTransform);
     }
-
 
     private void DragSelectedPart()
     {
@@ -152,7 +149,7 @@ public class ComponentManager : MonoBehaviour
 
     public void UpdateComponentStatus(bool? isDetached)
     {
-        // Update the UI with the component status
+        // Update UI with component status
         OnComponentStatusChanged?.Invoke(isDetached);
     }
 }
