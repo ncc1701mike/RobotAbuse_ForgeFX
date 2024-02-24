@@ -7,9 +7,9 @@ using UnityEngine.TestTools;
 
 public class CameraControllerTests
 {
-    private GameObject cameraObject;
-    private CamController camController;
-    private MockInputHandler mockInputHandler;
+    private GameObject cameraObject;            // The GameObject containing the CamController component
+    private CamController camController;        // The CamController component
+    private MockInputHandler mockInputHandler;  // The mock input handler - simulates user input for testing
 
 
     [SetUp]
